@@ -1,0 +1,27 @@
+<h1>Список файлов</h1>
+<form method="GET">
+    <label for="public_key">Введите публичную ссылку:</label>
+    <input type="text" id="public_key" name="public_key" value="{{ public_key }}">
+    <button type="submit">Показать файлы</button>
+</form>
+
+
+    <a href="{% url 'users:register' %}">Регистрация</a>
+
+    <a href="{% url 'users:login' %}">Войти</a>
+
+
+{% if files %}
+    <ul>
+        {% for file in files %}
+            <li>
+                {{ file.name }} ({{ file.type }})
+                {% if file.type == 'file' %}
+                    <a href="{% url 'download_file' file.path %}?public_key={{ public_key }}">Скачать</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Файлы не найдены или не указана публичная ссылка.</p>
+{% endif %}
